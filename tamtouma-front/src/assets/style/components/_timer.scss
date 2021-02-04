@@ -1,0 +1,51 @@
+.timer{
+    display: block;
+    width: 100%;
+    &--todo{
+        background-color: $firebrick;
+        color: $goldenrod;
+    }
+    &--pause{
+        background-color: $apple-green;
+        color: $eerie-black;
+    }
+    &-loader{
+        width: 100%;
+        height: 25px;
+        margin-bottom: 3rem;
+        &--todo{
+            background-color: $goldenrod;
+        }
+        &--pause{
+            background-color: $eerie-black;
+        }
+    }
+    &-counter{
+        font-size: 7rem;
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    &-desc{
+        font-size: 1rem;
+        margin-bottom: 3rem;
+        text-align: center;
+    }
+    &-box{
+        padding: 1rem;
+        width: 80%;
+        margin: 2rem auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    &-button{
+        width: 2rem;
+        height: 2rem;
+        &:hover{
+            cursor: pointer;
+            box-shadow: 0rem 0.5rem 1rem;
+            z-index: 20;
+        }
+    }
+}
