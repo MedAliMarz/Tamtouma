@@ -1,11 +1,11 @@
 <template>
   <div id='app'>
-    <b-container fluid='md'>
-      <b-row align-v='center' align-h='around'>
+    <b-container>
+      <b-row align-h='around'>
         <b-col  md='3'>
           <TaskList />
         </b-col>
-        <b-col  md='8'>
+        <b-col  md='9'>
           <Timer />
         </b-col>
       </b-row>

@@ -1,13 +1,74 @@
 
 .task{
-
+    font-size: 1rem;
+    padding: 0.5rem;
+    display: block;
+    color: #C4C4C4;
+    margin: 0.5rem;
+    border-bottom: 1px solid #C4C4C4;
+}
+.tasks-box{
+    justify-self: flex-start;
+    height: 100%;
+    overflow: auto;
+    &--blur{
+        filter: blur(5px);
+    }
+}
+.task-form{
+    @include box-shadow;
+    padding:1rem;
+    border-radius: 5%;
+    border-top: 1.1px solid #E5E5E5;
+    &-btn{
+        @include box-shadow;
+        border-radius: 0.5rem !important;
+        padding:0.3rem 0.7rem !important;
+        border: none;
+        
+        &--main{
+            background-color:$apple-green !important; 
+        }
+        &--second{
+            background-color: $goldenrod !important;
+        }
+    }
+    &-actions{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    } 
+        
 }
 .task-list{
 
+    @include box-shadow;
+    position: relative;
+    background: #FAF9F9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
     &-header{
-        background-color: #c4c4c4;
+        background-color: #E5E5E5;
         color: #262626;
+        font-size: 1.5rem;
+        padding:0.5rem;
+        height: 50px;
         width: 100%;
     }
 
+    &-button{
+        @include box-shadow;
+        position: relative;
+        margin: 1rem auto;
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: #E5E5E5 !important;
+        border-radius: 100%;
+        color:$eerie-black;
+        &:hover{
+            cursor: pointer;
+        }
+    }
 }

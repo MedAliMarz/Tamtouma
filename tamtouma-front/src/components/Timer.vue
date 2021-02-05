@@ -11,7 +11,7 @@
       ></b-icon>
       <b-icon
         @click="play"
-        icon="play-circle"
+        :icon="playing ? 'play-circle' : 'pause-circle'"
         class="timer-button"
       ></b-icon>
       <b-icon
