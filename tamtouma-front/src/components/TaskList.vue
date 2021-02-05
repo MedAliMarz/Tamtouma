@@ -6,7 +6,7 @@
         <span class="task" v-for='(task,index) in tasks' :key="index">{{task.name}}</span>
     </div>
 
-     <b-form class="task-form" @submit="onSubmit" @reset="onReset" v-if="displayForm">
+     <b-form class="task-form" @submit.prevent="onSubmit" @reset.prevent="onReset" v-if="displayForm">
       <b-form-group
         id="input-group-1"
         label="Todo"
@@ -28,15 +28,14 @@
       <b-form-group id="input-group-2" label="Pomo Number:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="taskForm.name"
+          v-model="taskForm.number"
           type='number'
           min='1'
-          description='Number of working sessions'
           required
         ></b-form-input>
       </b-form-group>
       <div class="task-form-actions">
-      <button type="reset" class="task-form-btn task-form-btn--second" @click='toggleForm'>Cancel</button>
+      <button type="reset" class="task-form-btn task-form-btn--second" >Cancel</button>
       <button type="submit" class="task-form-btn task-form-btn--main">Add Pomo</button>
       </div>
     </b-form>
@@ -61,6 +60,14 @@ export default {
   methods: {
     toggleForm () {
       this.displayForm = !this.displayForm
+    },
+    onReset () {
+      this.toggleForm()
+    },
+    onSubmit () {
+      const task = { ...this.taskForm }
+      this.tasks.push(task)
+      this.toggleForm()
     }
   }
 }

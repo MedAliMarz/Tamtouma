@@ -1,9 +1,22 @@
 <template>
-  <div class="timer" :class="{'timer--todo':!finished,'timer--pause':finished,}">
-    <div class="timer-loader" :class="{'timer-loader--todo':!finished,'timer-loader--pause':finished,}"></div>
-    <h1 class="timer-counter">15:30</h1>
+  <div
+    class="timer"
+    :class="{ 'timer--todo': isPomo, 'timer--pause': !isPomo }"
+  >
+    <div
+      class="timer-loader"
+      :class="{
+        'timer-loader--todo': isPomo,
+        'timer-loader--pause': !isPomo
+      }"
+    ></div>
+    <h1 class="timer-counter">
+      {{ this.time.min.toString().padStart(2, "0") }}:{{
+        this.time.sec.toString().padStart(2, "0")
+      }}
+    </h1>
     <h5 class="timer-desc">Workout for 30 min</h5>
-    <div class="timer-box" >
+    <div class="timer-box">
       <b-icon
         @click="redo"
         icon="arrow-clockwise"
@@ -11,35 +24,81 @@
       ></b-icon>
       <b-icon
         @click="play"
-        :icon="playing ? 'play-circle' : 'pause-circle'"
+        :icon="!playing ? 'play-circle' : 'pause-circle'"
         class="timer-button"
       ></b-icon>
-      <b-icon
-        @click="done"
-        icon="check-circle"
-        class="timer-button"
-      ></b-icon>
+      <b-icon @click="done" icon="check-circle" class="timer-button"></b-icon>
     </div>
   </div>
 </template>
 
 <script>
+
+const POMODORO_MINUTES = 25 // default timer for one pomodoro
+const SHORT_REST_MINUTES = 5 // default timer for short rest
+const LONG_REST_MINUTES = 15 // default timer for long rest
 export default {
+
   data: () => {
     return {
+      isPomo: true,
       playing: false,
-      finished: false
+      finishedPomos: 0,
+      time: {
+        min: 0,
+        sec: 0
+      },
+      interval: null
     }
+  },
+  mounted () {
+    this.initInterval(POMODORO_MINUTES)
   },
   methods: {
     play () {
       this.playing = !this.playing
+      if (this.playing) {
+        this.startInterval()
+      } else {
+        this.stopInterval()
+      }
     },
     redo () {
-      this.finished = false
+      this.stopInterval()
+      this.initInterval(POMODORO_MINUTES)
     },
     done () {
-      this.finished = true
+      this.stopInterval()
+      if (this.isPomo) {
+        this.finishedPomos++
+        this.initInterval(this.finishedPomos === 4 ? LONG_REST_MINUTES : SHORT_REST_MINUTES)
+        this.finishedPomos = this.finishedPomos === 4 ? 0 : this.finishedPomos
+      } else {
+        this.initInterval(POMODORO_MINUTES)
+      }
+      this.isPomo = !this.isPomo
+    },
+    initInterval (minutes) {
+      this.time = {
+        min: minutes,
+        sec: 0
+      }
+    },
+    startInterval () {
+      this.interval = setInterval(() => {
+        if (this.time.sec > 0) {
+          this.time.sec--
+        } else if (this.time.min > 0) {
+          this.time.min--
+          this.time.sec = 59
+        } else {
+          this.finishedPomos++
+          this.stopInterval()
+        }
+      }, 1000)
+    },
+    stopInterval () {
+      clearInterval(this.interval)
     }
   }
 }
