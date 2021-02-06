@@ -18,10 +18,10 @@
         height: 25px;
         margin-bottom: 3rem;
         &--todo{
-            background-color: $goldenrod;
+            background-color: $goldenrod !important;
         }
         &--pause{
-            background-color: $eerie-black;
+            background-color: $eerie-black !important;
         }
     }
     &-counter{

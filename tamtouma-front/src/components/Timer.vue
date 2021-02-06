@@ -3,13 +3,16 @@
     class="timer"
     :class="{ 'timer--todo': isPomo, 'timer--pause': !isPomo }"
   >
-    <div
-      class="timer-loader"
-      :class="{
+    <b-progress :max="maxTime * 60" class="bg-transparent">
+      <b-progress-bar
+        class="timer-loader"
+        :class="{
         'timer-loader--todo': isPomo,
         'timer-loader--pause': !isPomo
-      }"
-    ></div>
+        }"
+        :value="maxTime*60 - (this.time.min*60 +this.time.sec)">
+      </b-progress-bar>
+    </b-progress>
     <h1 class="timer-counter">
       {{ this.time.min.toString().padStart(2, "0") }}:{{
         this.time.sec.toString().padStart(2, "0")
@@ -44,6 +47,7 @@ export default {
       isPomo: true,
       playing: false,
       finishedPomos: 0,
+      maxTime: 0,
       time: {
         min: 0,
         sec: 0
@@ -79,6 +83,7 @@ export default {
       this.isPomo = !this.isPomo
     },
     initInterval (minutes) {
+      this.maxTime = minutes
       this.time = {
         min: minutes,
         sec: 0
