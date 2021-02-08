@@ -1,0 +1,40 @@
+.red{
+    &-color{
+        color:$firebrick !important;
+    }
+    &-background{
+        background-color: $firebrick !important;
+    }
+}
+.black{
+    &-color{
+        color:$eerie-black !important;
+    }
+    &-background{
+        background-color: $eerie-black !important;
+    }
+}
+.white{
+    &-color{
+        color:$cultured !important;
+    }
+    &-background{
+        background-color: $cultured !important;
+    }
+}
+.green{
+    &-color{
+        color:$apple-green !important;
+    }
+    &-background{
+        background-color: $apple-green !important;
+    }
+}
+.yellow{
+    &-color{
+        color:$goldenrod !important;
+    }
+    &-background{
+        background-color: $goldenrod !important;
+    }
+}

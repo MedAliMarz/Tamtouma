@@ -2,8 +2,17 @@
   <div class="task-list">
     <h3 class="task-list-header">Tasks</h3>
     <div class="tasks-box" :class="{'tasks-box--blur':displayForm}">
-        <span class="h6" v-if="!tasks.length">No tasks</span>
-        <span class="task" v-for='(task,index) in tasks' :key="index">{{task.name}}</span>
+        <span class="h6" v-if="!allTasks.length">No tasks</span>
+        <div class="task d-flex flex-row  justify-content-between align-items-center " v-for='(task,index) in allTasks' :key="index">
+          <b-badge v-if="task.completed"  class="green-background white-color">
+            <b-icon icon="check-circle"></b-icon>
+          </b-badge>
+          <b-badge v-if="!task.completed" class="black-background white-color"><span class="yellow-color">{{task.finishedIterations}}</span>/{{task.iterations}}</b-badge>
+          <span>{{task.name}}</span>
+          <b-badge class="red-background white-color">
+            <b-icon @click.prevent='onDelete(task.id)' icon="x"></b-icon>
+          </b-badge>
+        </div>
     </div>
 
      <b-form class="task-form" @submit.prevent="onSubmit" @reset.prevent="onReset" v-if="displayForm">
@@ -25,10 +34,10 @@
 
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Pomo Number:" label-for="input-2">
+      <b-form-group id="input-group-2" label="Pomo Iterations Number:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="taskForm.number"
+          v-model="taskForm.iterations"
           type='number'
           min='1'
           required
@@ -44,19 +53,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data: () => {
     return {
-      tasks: [
-
-      ],
       displayForm: false,
       taskForm: {
         name: '',
-        number: '1'
+        iterations: 1
       }
     }
   },
+  computed: mapGetters(['allTasks']),
   methods: {
     toggleForm () {
       this.displayForm = !this.displayForm
@@ -64,10 +72,17 @@ export default {
     onReset () {
       this.toggleForm()
     },
+    onDelete (taskId) {
+      this.$store.dispatch('deleteTask', taskId)
+    },
     onSubmit () {
       const task = { ...this.taskForm }
-      this.tasks.push(task)
+      this.$store.dispatch('createTask', task)
       this.toggleForm()
+      this.taskForm = {
+        name: '',
+        iterations: 1
+      }
     }
   }
 }

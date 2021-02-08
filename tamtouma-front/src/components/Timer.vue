@@ -18,7 +18,7 @@
         this.time.sec.toString().padStart(2, "0")
       }}
     </h1>
-    <h5 class="timer-desc">Workout for 30 min</h5>
+    <h5 class="timer-desc">{{currentTask.name}}</h5>
     <div class="timer-box">
       <b-icon
         @click="redo"
@@ -36,12 +36,11 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 const POMODORO_MINUTES = 25 // default timer for one pomodoro
 const SHORT_REST_MINUTES = 5 // default timer for short rest
 const LONG_REST_MINUTES = 15 // default timer for long rest
 export default {
-
   data: () => {
     return {
       isPomo: true,
@@ -58,6 +57,7 @@ export default {
   mounted () {
     this.initInterval(POMODORO_MINUTES)
   },
+  computed: mapGetters(['currentTask']),
   methods: {
     play () {
       this.playing = !this.playing
@@ -75,6 +75,7 @@ export default {
       this.stopInterval()
       if (this.isPomo) {
         this.finishedPomos++
+        this.$store.dispatch('increaseTaskIterations', this.currentTask.id)
         this.initInterval(this.finishedPomos === 4 ? LONG_REST_MINUTES : SHORT_REST_MINUTES)
         this.finishedPomos = this.finishedPomos === 4 ? 0 : this.finishedPomos
       } else {
