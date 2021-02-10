@@ -1,7 +1,62 @@
 .timer{
+    position: relative;;
+    flex-grow: 1;
+    gap: 1rem;
+    // mobile design 
+    @media (max-width: 375px){
+        min-width: 375px;
+        @include box-shadow;
+        flex-direction: row;
+        justify-content: space-between;
+
+        &-loader{
+            display: none;
+        }
+        &-counter{
+            font-size: 5rem;
+            font-weight: 300;
+            text-align: center;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            &-separator:after{
+                content: '' !important;
+            }
+        }
+        &-desc{
+            margin-top: 2rem;
+            left: 50%;
+            transform: translate(-50%,0);
+            position:absolute;
+            display: block;
+            text-align: center;
+        }
+        &-box{
+            padding: 1rem;
+            height: 80%;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column-reverse !important;
+            justify-content: space-around;
+            align-items: center;
+        }
+        &-button{
+            width: 2.5rem;
+            height: 2.5rem;
+            display: block;
+            background-color: transparent !important;
+            &:hover{
+                cursor: pointer;
+                box-shadow: 0rem 0.5rem 1rem;
+                z-index: 20;
+            }
+        }
+    }
+
     @include box-shadow;
     display: block;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -29,6 +84,9 @@
         font-weight: 300;
         text-align: center;
         margin-bottom: 1.5rem;
+        &-separator:after{
+            content: ':';
+        }
     }
     &-desc{
         font-size: 1rem;
@@ -53,4 +111,6 @@
             z-index: 20;
         }
     }
+
+    
 }

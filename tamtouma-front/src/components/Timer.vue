@@ -3,7 +3,7 @@
     class="timer"
     :class="{ 'timer--todo': isPomo, 'timer--pause': !isPomo }"
   >
-    <b-progress :max="maxTime * 60" class="bg-transparent">
+    <b-progress :max="maxTime * 60" class="bg-transparent timer-loader-parent">
       <b-progress-bar
         class="timer-loader"
         :class="{
@@ -14,11 +14,12 @@
       </b-progress-bar>
     </b-progress>
     <h1 class="timer-counter">
-      {{ this.time.min.toString().padStart(2, "0") }}:{{
+      <span class="timer-counter-separator">{{ this.time.min.toString().padStart(2, "0") }}</span>
+      <span>{{
         this.time.sec.toString().padStart(2, "0")
-      }}
+      }}</span>
     </h1>
-    <h5 class="timer-desc">{{currentTask.name}}</h5>
+    <h5 class="timer-desc">{{ currentTask?currentTask.name: '* * *'}}</h5>
     <div class="timer-box">
       <b-icon
         @click="redo"

@@ -1,9 +1,9 @@
 <template>
   <div class="task-list">
     <h3 class="task-list-header">Tasks</h3>
-    <div class="tasks-box" :class="{'tasks-box--blur':displayForm}">
+    <div class="tasks-box">
         <span class="h6" v-if="!allTasks.length">No tasks</span>
-        <div class="task d-flex flex-row  justify-content-between align-items-center " v-for='(task,index) in allTasks' :key="index">
+        <div class="task d-flex flex-row justify-content-between align-items-center" v-for='task in allTasks' :key="task.id">
           <b-badge v-if="task.completed"  class="green-background white-color">
             <b-icon icon="check-circle"></b-icon>
           </b-badge>
@@ -14,7 +14,6 @@
           </b-badge>
         </div>
     </div>
-
      <b-form class="task-form" @submit.prevent="onSubmit" @reset.prevent="onReset" v-if="displayForm">
       <b-form-group
         id="input-group-1"
@@ -24,7 +23,7 @@
       >
       <b-form-textarea
         id="todo-desc"
-          v-model="taskForm.name"
+          v-model.trim="taskForm.name"
           type="textarea"
           placeholder="Do that! ..."
           required
@@ -37,9 +36,9 @@
       <b-form-group id="input-group-2" label="Pomo Iterations Number:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="taskForm.iterations"
+          v-model.number="taskForm.iterations"
           type='number'
-          min='1'
+          min=1
           required
         ></b-form-input>
       </b-form-group>
@@ -76,8 +75,8 @@ export default {
       this.$store.dispatch('deleteTask', taskId)
     },
     onSubmit () {
-      const task = { ...this.taskForm }
-      this.$store.dispatch('createTask', task)
+      // const task = { ...this.taskForm }
+      this.$store.dispatch('createTask', this.taskForm)
       this.toggleForm()
       this.taskForm = {
         name: '',

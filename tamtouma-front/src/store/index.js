@@ -15,13 +15,7 @@ export default new Vuex.Store({
         completed: boolean
       }
     */
-    tasks: [{
-      id: 'blabla',
-      name: 'Testing',
-      iterations: 3,
-      finishedIterations: 1,
-      completed: false
-    }]
+    tasks: []
 
   },
   mutations: {
@@ -47,7 +41,6 @@ export default new Vuex.Store({
     // create a task
     createTask ({ commit }, task) {
       const hash = createHash('sha256')
-
       hash.on('readable', () => {
         const data = hash.read()
         if (data) {
@@ -55,7 +48,7 @@ export default new Vuex.Store({
           commit('addTask', { id, name: task.name, iterations: task.iterations, finishedIterations: 0, completed: false })
         }
       })
-      hash.write(task.toString())
+      hash.write(Object.values(task).toString())
       hash.end()
     },
     // delete a task

@@ -1,7 +1,7 @@
 <template>
-  <div id='app'>
-    <b-container>
-      <b-row align-h='around'>
+  <div id='app' class="app">
+    <!-- <b-container>
+      <b-row align-h='around' class="app">
         <b-col  md='3'>
           <TaskList />
         </b-col>
@@ -9,7 +9,9 @@
           <Timer />
         </b-col>
       </b-row>
-    </b-container>
+    </b-container> -->
+    <TaskList />
+    <Timer />
   </div>
 </template>
 
@@ -30,10 +32,15 @@ export default {
 #app {
   height: 100vh;
 }
-.row{
-  height: 100%;
-}
-.col{
-  height: 100%;
+.app{
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  @media (max-width: 375px){
+    min-width: 375px !important;
+    padding: 0 !important;
+    flex-direction: column-reverse !important;
+  }
 }
 </style>
