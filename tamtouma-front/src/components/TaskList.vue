@@ -1,9 +1,18 @@
 <template>
   <div class="task-list">
     <h3 class="task-list-header">Tasks</h3>
-    <div class="tasks-box">
+    <div
+      class="tasks-box"
+      >
         <span class="h6" v-if="!allTasks.length">No tasks</span>
-        <div class="task d-flex flex-row justify-content-between align-items-center" v-for='task in allTasks' :key="task.id">
+        <div class="task d-flex flex-row justify-content-between align-items-center"
+          v-for='(task,index) in allTasks'
+          :key="task.id"
+          draggable
+          @dragstart='startDrag($event, task)'
+          @dragover.prevent
+          @drop='onDrop($event,index)'
+          >
           <b-badge v-if="task.completed"  class="green-background white-color">
             <b-icon icon="check-circle"></b-icon>
           </b-badge>
@@ -82,6 +91,15 @@ export default {
         name: '',
         iterations: 1
       }
+    },
+    startDrag: (evt, task) => {
+      evt.dataTransfer.dropEffect = 'move'
+      evt.dataTransfer.effectAllowed = 'move'
+      evt.dataTransfer.setData('taskID', task.id)
+    },
+    onDrop (evt, newIndex) {
+      const taskId = evt.dataTransfer.getData('taskID')
+      this.$store.dispatch('updateIndex', { taskId, newIndex })
     }
   }
 }

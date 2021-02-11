@@ -27,6 +27,9 @@ export default new Vuex.Store({
     removeTask (state, id) {
       state.tasks = state.tasks.filter(task => task.id !== id)
     },
+    reorderTasks (state, updatedTasks) {
+      state.tasks = updatedTasks
+    },
     // complete a task (change the completed session number)
     increaseIteration (state, id) {
       const task = state.tasks.find(task => task.id === id)
@@ -58,6 +61,13 @@ export default new Vuex.Store({
     // increase the iterations of a task
     increaseTaskIterations ({ commit }, taskId) {
       commit('increaseIteration', taskId)
+    },
+    updateIndex ({ commit, state }, { taskId, newIndex }) {
+      const oldIndex = state.tasks.indexOf(task => task.id === taskId)
+      const task = state.tasks.find(task => task.id === taskId)
+      let updatedTasks = state.tasks.splice(oldIndex, 1)
+      updatedTasks = [...updatedTasks.slice(0, newIndex), task, ...updatedTasks.slice(newIndex)]
+      commit('reorderTasks', updatedTasks)
     }
   },
   getters: {

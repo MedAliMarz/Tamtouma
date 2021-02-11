@@ -107,8 +107,7 @@
         background-color: transparent !important;
         &:hover{
             cursor: pointer;
-            box-shadow: 0rem 0.5rem 1rem;
-            z-index: 20;
+            filter: drop-shadow( 0rem 0.5rem 1rem currentColor) !important;
         }
     }
 

@@ -31,7 +31,10 @@
         :icon="!playing ? 'play-circle' : 'pause-circle'"
         class="timer-button"
       ></b-icon>
-      <b-icon @click="done" icon="check-circle" class="timer-button"></b-icon>
+      <b-icon
+        @click="done"
+        icon="check-circle"
+        class="timer-button"></b-icon>
     </div>
   </div>
 </template>
